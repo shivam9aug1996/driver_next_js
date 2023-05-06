@@ -12,6 +12,5 @@
 }
 
 .active_link {
-  text-decoration: underline;
   border-bottom: black 1px solid;
 }
