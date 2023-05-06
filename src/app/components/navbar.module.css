@@ -1,0 +1,17 @@
+.navbar {
+  flex: 0.23;
+}
+
+.navbar_list {
+  display: flex;
+  text-decoration: none;
+  list-style: none;
+
+  justify-content: space-between;
+  min-width: 200px;
+}
+
+.active_link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
