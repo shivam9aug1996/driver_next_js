@@ -21,6 +21,7 @@ const AboutSection1 = () => {
           </p>
         </div>
         <Image
+          alt="driver wearing a mask in a car"
           className={styles.homeSection1_image}
           src={"/driver-7.webp"}
           width={200}
@@ -29,6 +30,7 @@ const AboutSection1 = () => {
       </div>
       <div className={styles.homeSection1}>
         <Image
+          alt="driver holding the steering wheel"
           className={styles.homeSection1_image}
           src={"/driver-8.jpg"}
           width={200}

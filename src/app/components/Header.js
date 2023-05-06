@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <div className={styles.header}>
       <Link href={"/"}>
-        <Image src="/driver-6.png" width={60} height={40} />
+        <Image src="/driver-6.png" alt="website logo" width={60} height={40} />
       </Link>
       <Navbar />
     </div>

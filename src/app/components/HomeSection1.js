@@ -11,6 +11,7 @@ export const HomeSection1 = () => {
         <CustomIcon />
       </div>
       <Image
+        alt="driver holding the steering wheel"
         className={styles.homeSection1_image}
         src={"/driver-4.jpeg"}
         width={200}

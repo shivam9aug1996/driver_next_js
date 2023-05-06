@@ -1,8 +1,8 @@
 import React from "react";
-import { MdCheckCircleOutline } from "react-icons/md";
+
 import styles from "./modal.module.css";
 
-export const Modal = ({ visible, setVisible }) => {
+const Modal = ({ visible, setVisible }) => {
   return (
     <div
       id="myModal"
@@ -26,3 +26,5 @@ export const Modal = ({ visible, setVisible }) => {
     </div>
   );
 };
+
+export default Modal;
