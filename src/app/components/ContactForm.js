@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import emailjs from "@emailjs/browser";
 import dynamic from "next/dynamic";
+import Loader from "./loader";
 // import { Modal } from "./Modal";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
 
@@ -15,13 +16,6 @@ const ContactForm = () => {
   });
   const [messageSent, setMessageSent] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  useEffect(() => {
-    if (messageSent) {
-      setTimeout(() => {
-        setMessageSent(false);
-      }, 2000);
-    }
-  }, [messageSent]);
 
   const handleChange = (e) => {
     let name = e.target.name;
@@ -44,11 +38,13 @@ const ContactForm = () => {
       .then(() => {
         setText({ fullName: "", email: "", mobileNumber: "", message: "" });
         setModalVisible(true);
+        setMessageSent(false);
       })
       .catch(() => {});
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setMessageSent(true);
     sendEmail();
     //console.log(text);
   };
@@ -126,11 +122,12 @@ const ContactForm = () => {
           }}
         >
           <button
+            disabled={messageSent}
             type="submit"
             className={styles.send_button}
             //   onClick={(e) => handleSubmit(e)}
           >
-            Send Message
+            {messageSent ? <Loader /> : `Send Message`}
           </button>
         </div>
       </form>

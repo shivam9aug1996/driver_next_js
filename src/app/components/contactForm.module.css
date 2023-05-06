@@ -47,6 +47,7 @@
   text-shadow: none;
   cursor: pointer;
   margin-bottom: 20px;
+  min-width: 164.75px;
 }
 .send_button:hover {
   background-color: white;
