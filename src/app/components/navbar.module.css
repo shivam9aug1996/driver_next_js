@@ -13,5 +13,5 @@
 
 .active_link {
   text-decoration: underline;
-  text-underline-offset: 4px;
+  border-bottom: black 1px solid;
 }
