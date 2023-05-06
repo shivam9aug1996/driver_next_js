@@ -38,3 +38,21 @@
   background-color: white;
   color: rgb(47, 137, 135);
 }
+
+.title {
+  display: flex;
+  flex-direction: column;
+  flex: 0.4;
+}
+
+@media only screen and (max-width: 600px) {
+  .homeSection1 {
+    flex-direction: column;
+  }
+  .title {
+    align-items: center;
+  }
+  .homeSection1_image {
+    width: 300px;
+  }
+}

@@ -6,7 +6,7 @@ import { CustomIcon } from "./CustomIcon";
 export const HomeSection1 = () => {
   return (
     <div className={styles.homeSection1}>
-      <div style={{ display: "flex", flexDirection: "column", flex: 0.4 }}>
+      <div className={styles.title}>
         <h1>Hire professional car drivers for local and outstation drives. </h1>
         <CustomIcon />
       </div>

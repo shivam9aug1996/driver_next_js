@@ -61,4 +61,7 @@
     flex-direction: column;
     padding-bottom: 0px;
   }
+  .homeSection1_image {
+    width: 300px;
+  }
 }
