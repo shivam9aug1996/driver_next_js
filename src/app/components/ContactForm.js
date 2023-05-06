@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import emailjs from "@emailjs/browser";
 import dynamic from "next/dynamic";
-import Loader from "./loader";
+// import Loader from "./Loader";
+
 // import { Modal } from "./Modal";
 const Modal = dynamic(() => import("./Modal"), { ssr: false });
+const Loader = dynamic(() => import("./Loader"));
 
 const ContactForm = () => {
   const [text, setText] = useState({

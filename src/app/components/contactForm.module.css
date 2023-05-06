@@ -48,6 +48,7 @@
   cursor: pointer;
   margin-bottom: 20px;
   min-width: 164.75px;
+  min-height: 39.5px;
 }
 .send_button:hover {
   background-color: white;
