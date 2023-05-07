@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 const mulish = Mulish({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Hire Your Driver",
+  title: "Hire Driver",
   description: "Hire professional car drivers for local and outstation drives",
 };
 

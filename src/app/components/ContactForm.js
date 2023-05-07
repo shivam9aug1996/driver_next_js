@@ -21,25 +21,33 @@ const ContactForm = () => {
     setText({ ...text, [name]: value });
   };
   const sendEmail = async () => {
-    const emailjs = (await import("@emailjs/browser")).default;
-    emailjs
-      .send(
-        process.env.EMAIL_SERVICE_ID,
-        process.env.EMAIL_TEMPLATE_ID,
-        {
-          ...text,
-          name: text.fullName,
-          email: "shivam9aug1996@gmail.com",
-          customerEmail: text.email,
-        },
-        process.env.EMAIL_PUBLIC_KEY
-      )
-      .then(() => {
-        setText({ fullName: "", email: "", mobileNumber: "", message: "" });
-        setModalVisible(true);
-        setMessageSent(false);
-      })
-      .catch(() => {});
+    setText({ fullName: "", email: "", mobileNumber: "", message: "" });
+    setModalVisible(true);
+    setMessageSent(false);
+    // console.log(
+    //   process.env.EMAIL_SERVICE_ID,
+    //   process.env.EMAIL_TEMPLATE_ID,
+    //   process.env.EMAIL_PUBLIC_KEY
+    // );
+    // const emailjs = (await import("@emailjs/browser")).default;
+    // emailjs
+    //   .send(
+    //     process.env.EMAIL_SERVICE_ID,
+    //     process.env.EMAIL_TEMPLATE_ID,
+    //     {
+    //       ...text,
+    //       name: text.fullName,
+    //       email: "shivam9aug1996@gmail.com",
+    //       customerEmail: text.email,
+    //     },
+    //     process.env.EMAIL_PUBLIC_KEY,
+    //   )
+    //   .then(() => {
+    //     setText({ fullName: "", email: "", mobileNumber: "", message: "" });
+    //     setModalVisible(true);
+    //     setMessageSent(false);
+    //   })
+    //   .catch(() => {});
   };
   const handleSubmit = (e) => {
     e.preventDefault();
