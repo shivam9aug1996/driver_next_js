@@ -24,15 +24,15 @@ const ContactForm = () => {
     const emailjs = (await import("@emailjs/browser")).default;
     emailjs
       .send(
-        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID,
-        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID,
+        process.env.EMAIL_SERVICE_ID,
+        process.env.EMAIL_TEMPLATE_ID,
         {
           ...text,
           name: text.fullName,
           email: "shivam9aug1996@gmail.com",
           customerEmail: text.email,
         },
-        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
+        process.env.EMAIL_PUBLIC_KEY
       )
       .then(() => {
         setText({ fullName: "", email: "", mobileNumber: "", message: "" });
