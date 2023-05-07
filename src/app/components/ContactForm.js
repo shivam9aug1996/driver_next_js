@@ -1,12 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
-import emailjs from "@emailjs/browser";
 import dynamic from "next/dynamic";
-// import Loader from "./Loader";
-
-// import { Modal } from "./Modal";
-const Modal = dynamic(() => import("./Modal"), { ssr: false });
+const Modal = dynamic(() => import("./Modal"));
 const Loader = dynamic(() => import("./Loader"));
 
 const ContactForm = () => {
@@ -25,17 +21,18 @@ const ContactForm = () => {
     setText({ ...text, [name]: value });
   };
   const sendEmail = async () => {
+    const emailjs = (await import("@emailjs/browser")).default;
     emailjs
       .send(
-        "service_fefud4e",
-        "template_iz52kxj",
+        process.env.NEXT_PUBLIC_EMAIL_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAIL_TEMPLATE_ID,
         {
           ...text,
           name: text.fullName,
           email: "shivam9aug1996@gmail.com",
           customerEmail: text.email,
         },
-        "G7_7HpLz_lyjYgbDV"
+        process.env.NEXT_PUBLIC_EMAIL_PUBLIC_KEY
       )
       .then(() => {
         setText({ fullName: "", email: "", mobileNumber: "", message: "" });
@@ -52,7 +49,9 @@ const ContactForm = () => {
   };
   return (
     <div className={styles.container}>
-      <Modal visible={modalVisible} setVisible={setModalVisible} />
+      {modalVisible && (
+        <Modal visible={modalVisible} setVisible={setModalVisible} />
+      )}
       <div style={{ display: "flex" }}>
         <h1>Request a&nbsp;</h1>
         <h1 style={{ color: "white" }}>call back</h1>
@@ -133,11 +132,6 @@ const ContactForm = () => {
           </button>
         </div>
       </form>
-      {/* {messageSent && (
-        <h3 style={{ color: "white" }}>
-          Your Request has been Sent Successfully!
-        </h3>
-      )} */}
     </div>
   );
 };

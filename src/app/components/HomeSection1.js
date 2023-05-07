@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import styles from "./homeSection.module.css";
-import { MdCall } from "react-icons/md";
 import { CustomIcon } from "./CustomIcon";
 export const HomeSection1 = () => {
   return (
