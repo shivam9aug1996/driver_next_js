@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import dynamic from "next/dynamic";
-const Modal = dynamic(() => import("./Modal"));
-const Loader = dynamic(() => import("./Loader"));
+let Loader = null;
+let Email = null;
+let Modal = null;
 
 const ContactForm = () => {
   const [text, setText] = useState({
@@ -15,15 +16,57 @@ const ContactForm = () => {
   const [messageSent, setMessageSent] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     let name = e.target.name;
     let value = e.target.value;
     setText({ ...text, [name]: value });
   };
   const sendEmail = async () => {
-    setText({ fullName: "", email: "", mobileNumber: "", message: "" });
-    setModalVisible(true);
-    setMessageSent(false);
+    if (navigator.onLine) {
+      Email.send({
+        SecureToken: process.env.EMAIL_SECURE_TOKEN,
+        To: "shivam9aug1996@gmail.com",
+        From: "shivam9aug1996@gmail.com",
+        Subject: `Hi Shivam`,
+        Body: `A New Contact Request has submitted the following details 
+                Name: ${text.fullName}
+                Email: ${text.email}
+                Mobile Number: ${text.mobileNumber}
+                Message: ${text.message}`,
+      })
+        .then((message) => {
+          Email.send({
+            SecureToken: process.env.EMAIL_SECURE_TOKEN,
+            To: `${text.email}`,
+            From: "shivam9aug1996@gmail.com",
+            Subject: `Hi ${text.fullName}`,
+            Body: `Thank you for contacting us, we will get back to you as soon as possible.`,
+          })
+            .then((message) => {
+              console.log(message);
+              setText({
+                fullName: "",
+                email: "",
+                mobileNumber: "",
+                message: "",
+              });
+              setModalVisible(true);
+              setMessageSent(false);
+            })
+            .catch(() => {
+              setMessageSent(false);
+            });
+        })
+        .catch(() => {
+          setMessageSent(false);
+        })
+        .finally(() => {
+          setMessageSent(false);
+        });
+    } else {
+      setMessageSent(false);
+    }
+
     // console.log(
     //   process.env.EMAIL_SERVICE_ID,
     //   process.env.EMAIL_TEMPLATE_ID,
@@ -49,11 +92,13 @@ const ContactForm = () => {
     //   })
     //   .catch(() => {});
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    Loader = (await import("./Loader")).default;
+    Email = (await import("./Email")).default;
+    Modal = (await import("./Modal")).default;
     setMessageSent(true);
     sendEmail();
-    //console.log(text);
   };
   return (
     <div className={styles.container}>
@@ -134,7 +179,6 @@ const ContactForm = () => {
             disabled={messageSent}
             type="submit"
             className={styles.send_button}
-            //   onClick={(e) => handleSubmit(e)}
           >
             {messageSent ? <Loader /> : `Send Message`}
           </button>
