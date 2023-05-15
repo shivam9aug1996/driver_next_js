@@ -8,7 +8,7 @@ const Navbar = () => {
   const pathname = usePathname();
   console.log(pathname);
   return (
-    <div className={styles.navbar}>
+    <nav className={styles.navbar}>
       <ul className={styles.navbar_list}>
         <li>
           <Link
@@ -47,7 +47,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 

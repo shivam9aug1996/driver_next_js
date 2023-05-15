@@ -1,12 +1,17 @@
-.container {
+.container1 {
   background-color: rgb(233, 220, 220);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.container {
   align-items: center;
   padding: 20px;
-
   border-width: 5px;
   border-color: brown;
+  text-align: center;
 }
 .container h2 {
   margin: 0;
@@ -33,4 +38,10 @@
   margin-bottom: 10px;
   letter-spacing: 1px;
   color: rgb(47, 137, 135);
+}
+
+@media only screen and (max-width: 600px) {
+  .container1 {
+    flex-direction: column;
+  }
 }
