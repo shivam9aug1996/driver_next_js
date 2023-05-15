@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import dynamic from "next/dynamic";
+import Mailjet from "node-mailjet";
+
 let Loader = null;
 let Email = null;
 let Modal = null;
@@ -23,46 +25,84 @@ const ContactForm = () => {
   };
   const sendEmail = async () => {
     if (navigator.onLine) {
-      Email.send({
-        SecureToken: process.env.EMAIL_SECURE_TOKEN,
-        To: "shivam9aug1996@gmail.com",
-        From: "shivam9aug1996@gmail.com",
-        Subject: `Hi Shivam`,
-        Body: `A New Contact Request has submitted the following details 
-                Name: ${text.fullName}
-                Email: ${text.email}
-                Mobile Number: ${text.mobileNumber}
-                Message: ${text.message}`,
-      })
-        .then((message) => {
-          Email.send({
-            SecureToken: process.env.EMAIL_SECURE_TOKEN,
-            To: `${text.email}`,
-            From: "shivam9aug1996@gmail.com",
-            Subject: `Hi ${text.fullName}`,
-            Body: `Thank you for contacting us, we will get back to you as soon as possible.`,
-          })
-            .then((message) => {
-              console.log(message);
-              setText({
-                fullName: "",
-                email: "",
-                mobileNumber: "",
-                message: "",
-              });
-              setModalVisible(true);
-              setMessageSent(false);
-            })
-            .catch(() => {
-              setMessageSent(false);
-            });
+      const mailjet = Mailjet.apiConnect(
+        "daf3347b0837a5ae94fdd0dcfe2f897f",
+        "fb81abf0bdb4541b46937a6a703d03a7",
+        {
+          config: {},
+          options: {},
+        }
+      );
+      const request = mailjet.post("send", { version: "v3.1" }).request({
+        Messages: [
+          {
+            From: {
+              Email: "care@driveronrent.com",
+              Name: "Mailjet Pilot",
+            },
+            To: [
+              {
+                Email: "passenger1@mailjet.com",
+                Name: "passenger 1",
+              },
+            ],
+            Subject: "Your email flight plan!",
+            TextPart:
+              "Dear passenger 1, welcome to Mailjet! May the delivery force be with you!",
+            HTMLPart:
+              '<h3>Dear passenger 1, welcome to <a href="https://www.mailjet.com/">Mailjet</a>!</h3><br />May the delivery force be with you!',
+          },
+        ],
+      });
+
+      request
+        .then((result) => {
+          console.log(result.body);
         })
-        .catch(() => {
-          setMessageSent(false);
-        })
-        .finally(() => {
-          setMessageSent(false);
+        .catch((err) => {
+          console.log(err.statusCode);
         });
+
+      // Email.send({
+      //   SecureToken: process.env.EMAIL_SECURE_TOKEN,
+      //   To: "shivam9aug1996@gmail.com",
+      //   From: "shivam9aug1996@gmail.com",
+      //   Subject: `Hi Shivam`,
+      //   Body: `A New Contact Request has submitted the following details
+      //           Name: ${text.fullName}
+      //           Email: ${text.email}
+      //           Mobile Number: ${text.mobileNumber}
+      //           Message: ${text.message}`,
+      // })
+      //   .then((message) => {
+      //     Email.send({
+      //       SecureToken: process.env.EMAIL_SECURE_TOKEN,
+      //       To: `${text.email}`,
+      //       From: "shivam9aug1996@gmail.com",
+      //       Subject: `Hi ${text.fullName}`,
+      //       Body: `Thank you for contacting us, we will get back to you as soon as possible.`,
+      //     })
+      //       .then((message) => {
+      //         console.log(message);
+      //         setText({
+      //           fullName: "",
+      //           email: "",
+      //           mobileNumber: "",
+      //           message: "",
+      //         });
+      //         setModalVisible(true);
+      //         setMessageSent(false);
+      //       })
+      //       .catch(() => {
+      //         setMessageSent(false);
+      //       });
+      //   })
+      //   .catch(() => {
+      //     setMessageSent(false);
+      //   })
+      //   .finally(() => {
+      //     setMessageSent(false);
+      //   });
     } else {
       setMessageSent(false);
     }
