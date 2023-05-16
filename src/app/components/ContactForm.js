@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import dynamic from "next/dynamic";
-import Mailjet from "node-mailjet";
 
 let Loader = null;
 let Email = null;

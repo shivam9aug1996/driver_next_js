@@ -16,6 +16,7 @@ export const HomeSection1 = () => {
         src={"/driver-4.jpeg"}
         width={200}
         height={300}
+        placeholder={"empty"}
       />
     </div>
   );

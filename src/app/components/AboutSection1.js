@@ -26,6 +26,7 @@ const AboutSection1 = () => {
           src={"/driver-7.webp"}
           width={200}
           height={300}
+          placeholder={"empty"}
         />
       </div>
       <div className={styles.homeSection1}>
@@ -35,6 +36,7 @@ const AboutSection1 = () => {
           src={"/driver-8.jpg"}
           width={200}
           height={300}
+          placeholder={"empty"}
         />
         <div style={{ display: "flex", flexDirection: "column", flex: 0.4 }}>
           <p>
