@@ -27,6 +27,7 @@ const AboutSection1 = () => {
           width={200}
           height={300}
           placeholder={"empty"}
+          style={{ width: "auto", height: "auto" }}
         />
       </div>
       <div className={styles.homeSection1}>
@@ -37,6 +38,7 @@ const AboutSection1 = () => {
           width={200}
           height={300}
           placeholder={"empty"}
+          style={{ width: "auto", height: "auto" }}
         />
         <div style={{ display: "flex", flexDirection: "column", flex: 0.4 }}>
           <p>

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./contactForm.module.css";
 import dynamic from "next/dynamic";
+import { useIsOnline } from "react-use-is-online";
 
 let Loader = null;
 let Email = null;
@@ -16,6 +17,19 @@ const ContactForm = () => {
   });
   const [messageSent, setMessageSent] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const { isOnline, isOffline, error } = useIsOnline();
+
+  useEffect(() => {
+    if (text.message) {
+      loadJs();
+    }
+  }, [text.message]);
+
+  const loadJs = async () => {
+    Loader = (await import("./Loader")).default;
+    Email = (await import("./Email")).default;
+    Modal = (await import("./Modal")).default;
+  };
 
   const handleChange = async (e) => {
     let name = e.target.name;
@@ -23,7 +37,7 @@ const ContactForm = () => {
     setText({ ...text, [name]: value });
   };
   const sendEmail = async () => {
-    if (navigator.onLine) {
+    if (isOnline) {
       // const mailjet = Mailjet.apiConnect(
       //   "daf3347b0837a5ae94fdd0dcfe2f897f",
       //   "fb81abf0bdb4541b46937a6a703d03a7",
@@ -66,7 +80,7 @@ const ContactForm = () => {
         // SecureToken: process.env.EMAIL_SECURE_TOKEN,
         Host: "smtp.elasticemail.com",
         Username: "shivam9aug1996@gmail.com",
-        Password: "1C22134791B46AA630EEFF7B8505577256A4",
+        Password: process.env.EMAIL_SERVICE_PASSWORD,
         To: "shivam9aug1996@gmail.com",
         From: "care@driveronrent.in",
         Subject: `Hi Shivam`,
@@ -82,7 +96,7 @@ const ContactForm = () => {
             // SecureToken: process.env.EMAIL_SECURE_TOKEN,
             Host: "smtp.elasticemail.com",
             Username: "shivam9aug1996@gmail.com",
-            Password: "1C22134791B46AA630EEFF7B8505577256A4",
+            Password: process.env.EMAIL_SERVICE_PASSWORD,
             To: `${text.email}`,
             From: "care@driveronrent.in",
             Subject: `Hi ${text.fullName}`,
@@ -140,9 +154,6 @@ const ContactForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    Loader = (await import("./Loader")).default;
-    Email = (await import("./Email")).default;
-    Modal = (await import("./Modal")).default;
     setMessageSent(true);
     sendEmail();
   };
@@ -155,6 +166,7 @@ const ContactForm = () => {
         <h1>Request a&nbsp;</h1>
         <h1 style={{ color: "white" }}>call back</h1>
       </div>
+
       <form onSubmit={handleSubmit}>
         <div
           style={{
@@ -173,16 +185,19 @@ const ContactForm = () => {
           >
             <label htmlFor="fullName">
               <input
+                id="fullName"
                 required
                 type={"text"}
                 name="fullName"
                 placeholder="Full Name"
                 value={text.fullName}
                 onChange={(e) => handleChange(e)}
+                autoComplete={"true"}
               />
             </label>
             <label htmlFor="email">
               <input
+                id="email"
                 size="30"
                 required
                 type={"email"}
@@ -190,16 +205,19 @@ const ContactForm = () => {
                 placeholder="Email"
                 onChange={(e) => handleChange(e)}
                 value={text.email}
+                autoComplete={"true"}
               />
             </label>
             <label htmlFor="mobileNumber">
               <input
+                id="mobileNumber"
                 required
                 type={"number"}
                 name="mobileNumber"
                 placeholder="Mobile Number"
                 onChange={(e) => handleChange(e)}
                 value={text.mobileNumber}
+                autoComplete={"true"}
               />
             </label>
           </div>
